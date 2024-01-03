@@ -8,6 +8,7 @@ const app = express();
 require('dotenv').config();
 
 // routes import
+const userAuthRoute=require('./api/Routes/UserManagement/auth')
 const userRoute=require('./api/Routes/UserManagement/user')
 
 
@@ -40,6 +41,8 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 
 // Settng Routes
+
+app.use('/api/users/auth',userAuthRoute)
 app.use('/api/users',userRoute)
 
 //Error Hadling
