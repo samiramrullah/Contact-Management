@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from 'react'
 import Navbar from '../../components/Navbar'
-import { DatePicker } from 'antd';
 
 const EditProfile = () => {
     const [userData, setUserData] = useState<any>()
@@ -66,7 +65,6 @@ const EditProfile = () => {
                         <button type='submit' className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Update</button>
                     </div>
                 </form>
-                <DatePicker />
             </section>
         </>
     )
