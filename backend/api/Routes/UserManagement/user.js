@@ -8,7 +8,7 @@ router.get('/getuserdetails', checkAuth, async (req, res, next) => {
         const userId = req.userData.userId;
         const user = await userSchema.findById(userId).select('name email projectAllocated managerComment');
         if (!user) return res.status(404).json({ message: "User Not Found" })
-        return res.status(200).json(user)
+        return res.status(200).json({user,message:"Data Successfully Fetched",status:true})
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

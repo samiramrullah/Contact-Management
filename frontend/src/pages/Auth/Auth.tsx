@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import { useParams, Link,useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Auth = () => {
     const [formData, setFormData] = useState({})
     const { id } = useParams();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const onChangeHandler = (e: any) => {
         const { name, value } = e.target;
@@ -16,9 +16,10 @@ const Auth = () => {
     }
     const loginHandler = (e: any) => {
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_API_KEY}users/login`, formData)
+        axios.post(`${process.env.REACT_APP_API_KEY}users/auth/login`, formData)
             .then((res) => {
                 toast.success(res.data.message)
+                localStorage.setItem('token',res.data.token)
                 navigate('/profile')
             })
             .catch((err: any) => {
@@ -29,8 +30,20 @@ const Auth = () => {
     }
     const signUpHandler = (e: any) => {
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_API_KEY}users/register`, formData)
-            .then((res) => toast.success(res.data.message))
+        axios.post(`${process.env.REACT_APP_API_KEY}users/auth/register`, formData)
+            .then((res) => {
+                if (res.data.status) {
+                    toast.success(res.data.message, {
+                        position: 'top-right',
+                    })
+                }
+                else
+                {
+                    toast.warning(res.data.message,{
+                        position:'top-right'
+                    })
+                }
+            })
             .catch((err: any) => {
                 toast.error(err.response.data.message, {
                     position: 'top-right'
@@ -127,7 +140,7 @@ const Auth = () => {
                         </div>
                     </div>
                 </section>
-                <ToastContainer />
+            <ToastContainer />
             </>
         )
     }
