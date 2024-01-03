@@ -23,7 +23,7 @@ router.post('/register', async (req, res, next) => {
     }
 })
 
-router.get('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password || !validator.isEmail(email)) return res.status(400).json({ message: 'Invalid Data' });

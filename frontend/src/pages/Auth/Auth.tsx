@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Auth = () => {
     const [formData, setFormData] = useState({})
     const { id } = useParams();
+    const navigate=useNavigate();
 
     const onChangeHandler = (e: any) => {
         const { name, value } = e.target;
@@ -15,8 +16,11 @@ const Auth = () => {
     }
     const loginHandler = (e: any) => {
         e.preventDefault();
-        axios.get(`${process.env.REACT_APP_API_KEY}users/login`, formData)
-            .then((res) => toast.success(res.data.message))
+        axios.post(`${process.env.REACT_APP_API_KEY}users/login`, formData)
+            .then((res) => {
+                toast.success(res.data.message)
+                navigate('/profile')
+            })
             .catch((err: any) => {
                 toast.error(err.response.data.message, {
                     position: 'top-right'
