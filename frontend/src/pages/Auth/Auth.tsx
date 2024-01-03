@@ -18,12 +18,12 @@ const Auth = () => {
         e.preventDefault();
         axios.post(`${process.env.REACT_APP_API_KEY}users/auth/login`, formData)
             .then((res) => {
-                toast.success(res.data.message)
-                localStorage.setItem('token',res.data.token)
-                navigate('/profile')
+                toast.success(res?.data.message)
+                localStorage.setItem('token',res?.data.token)
+                navigate('/dashbaord')
             })
             .catch((err: any) => {
-                toast.error(err.response.data.message, {
+                toast.error(err?.response?.data.message, {
                     position: 'top-right'
                 })
             })
@@ -36,6 +36,7 @@ const Auth = () => {
                     toast.success(res.data.message, {
                         position: 'top-right',
                     })
+                    navigate('/auth/:login')
                 }
                 else
                 {
