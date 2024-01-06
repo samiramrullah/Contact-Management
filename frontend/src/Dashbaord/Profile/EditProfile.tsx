@@ -1,5 +1,6 @@
-import { ChangeEvent, useState } from 'react'
-import Navbar from '../../components/Navbar'
+import axios from 'axios';
+import { ChangeEvent, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 const EditProfile = () => {
     const [userData, setUserData] = useState<any>()
@@ -12,13 +13,24 @@ const EditProfile = () => {
     }
     const onSubmitHandler = (e: any) => {
         e.preventDefault();
-        console.log(userData);
+        axios.put(`${process.env.REACT_APP_API_KEY}users/updateuserdetails`, userData, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+            .then((res) => {
+                toast.success(res?.data.message)
+            })
+            .catch((err: any) => {
+                toast.error(err?.response?.data.message, {
+                    position: 'top-right'
+                })
+            })
     }
     return (
         <>
-            <Navbar />
-            <section className="max-w-5xl p-6 mx-auto bg-white rounded-md shadow-md0">
-                <h2 className="text-lg font-semibold text-gray-700 capitalize ">Account settings</h2>
+            <section className="max-w-5xl p-6 mx-auto bg-white rounded-md shadow-md0 content-center md:mt-36 mt-0">
+                <h2 className="text-lg font-semibold text-gray-700 capitalize ">Update Profile</h2>
                 <form onSubmit={onSubmitHandler}>
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div>
@@ -61,6 +73,7 @@ const EditProfile = () => {
                     </div>
                 </form>
             </section>
+            <ToastContainer />
         </>
     )
 }

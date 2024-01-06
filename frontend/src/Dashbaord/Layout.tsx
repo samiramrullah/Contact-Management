@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Profile from './Profile/Profile';
 import EditProfile from './Profile/EditProfile';
 
@@ -10,7 +10,6 @@ const Layout = () => {
     };
     return (
         <>
-
             <button
 
                 type="button"
@@ -40,10 +39,14 @@ const Layout = () => {
                 aria-label="Sidebar"
             >
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-                    <Link to={'/'} className="flex items-center ps-2.5 mb-5">
+                    <div className="flex items-center ps-2.5 mb-5">
                         <img src="https://flowbite.com/docs/images/logo.svg" className="h-6 me-3 sm:h-7" alt="tech" />
                         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Soultion Nepal</span>
-                    </Link>
+                        {isSidebarOpen && <svg onClick={()=>setIsSidebarOpen(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                        }
+                    </div>
                     <ul className="space-y-2 font-medium">
                         <li>
                             <a href="1" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

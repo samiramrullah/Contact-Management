@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const cors = require('cors')
 const app = express();
 
 require('dotenv').config();
@@ -25,16 +25,12 @@ mongoose.Promise = global.Promise;
 
 
 // CORS
-
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*') // wildcard (whitelisting the api)
-    res.header('Access-Control-Allow-Headers', '*');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Methods', 'POST', 'GET', 'PATCH', 'DELETE', 'PUT')
-        return res.status(200).json({});
-    }
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins (replace with specific domains in production)
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify allowed methods
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'); // Specify allowed headers
     next();
-})
+});
 
 // parsing the body
 

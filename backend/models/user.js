@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     phNumber: { type: String, require: false },
     degination: { type: String, require: false },
     description: { type: String, require: false },
-    projectAllocated: { type: Array, require: false },
+    projects: { type:mongoose.Schema.Types.ObjectId,ref:'Project' },
     managerComment: { type: Array, require: false },
 })
 

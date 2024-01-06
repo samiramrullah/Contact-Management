@@ -29,8 +29,6 @@ const Profile = () => {
         toast.error(err?.response?.data.error.message)
       })
   }, [])
-  console.log(userData);
-
   return (
     <>
       <div className=''>
@@ -60,7 +58,7 @@ const Profile = () => {
               </div>
 
               <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-                <Link to={'/editprofile'}
+                <Link to={'/dashbaord/editprofile'}
                   className="cursor-pointer text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 flex items-center justify-center"
                 >
                   <svg
@@ -99,7 +97,7 @@ const Profile = () => {
             </div>
 
             <div className="mt-12 flex flex-col justify-center">
-              <p className="text-gray-600 text-center font-light lg:px-16">{userData?.discription ? userData?.discription : 'No Discription Provided'}</p>
+              <p className="text-gray-600 text-center font-light lg:px-16">{userData?.description ? userData?.description : 'No Discription Provided'}</p>
               {/* <button
               className="text-indigo-500 py-2 px-4  font-medium mt-4"
             >

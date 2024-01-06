@@ -6,9 +6,9 @@ const userSchema = require('../../../models/user')
 router.get('/getuserdetails', checkAuth, async (req, res, next) => {
     try {
         const userId = req.userData.userId;
-        const user = await userSchema.findById(userId).select('name email projectAllocated managerComment');
+        const user = await userSchema.findById(userId).select('name email projectAllocated managerComment description');
         if (!user) return res.status(404).json({ message: "User Not Found" })
-        return res.status(200).json({user,message:"Data Successfully Fetched",status:true})
+        return res.status(200).json({ user, message: "Data Successfully Fetched", status: true })
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -16,38 +16,42 @@ router.get('/getuserdetails', checkAuth, async (req, res, next) => {
 
 router.put('/updateuserdetails', checkAuth, async (req, res, next) => {
     try {
-      const userId = req.userData.userId;
-      const { projectAllocated, name, email, phNumber, degination, description } = req.body;
-  
-      // Constructing the update object conditionally
-      const updateFields = {};
-      if (name) updateFields.name = name;
-      if (email) updateFields.email = email;
-      if (phNumber) updateFields.phNumber = phNumber;
-      if (degination) updateFields.degination = degination;
-      if (description) updateFields.description = description;
-  
-      if (projectAllocated) {
-        updateFields.$push = { projectAllocated: { $each: projectAllocated } };
-      }
-  
-      // Update the user document based on the constructed update object
-      const user = await userSchema.findByIdAndUpdate(
-        userId,
-        updateFields,
-        { new: true }
-      );
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      return res.status(200).json(user);
+        console.log("here");
+        const userId = req.userData.userId;
+        const { projectAllocated, name, email, phNumber, degination, description } = req.body;
+
+        // Constructing the update object conditionally
+        const updateFields = {};
+        if (name) updateFields.name = name;
+        if (email) updateFields.email = email;
+        if (phNumber) updateFields.phNumber = phNumber;
+        if (degination) updateFields.degination = degination;
+        if (description) updateFields.description = description;
+
+        if (projectAllocated) {
+            updateFields.$push = { projectAllocated: { $each: projectAllocated } };
+        }
+
+        // Update the user document based on the constructed update object
+        const user = await userSchema.findByIdAndUpdate(
+            userId,
+            updateFields,
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ status: false, message: 'User not found' });
+        }
+
+        return res.status(200).json({
+            status: true,
+            message: "Data Successfully Updated"
+        });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  });
-  
+});
+
 router.get('/getallusers', checkAuth, async (req, res, next) => {
     try {
         const userId = req.userData;

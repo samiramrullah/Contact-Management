@@ -6,7 +6,8 @@ const projectSchema = mongoose.Schema({
     startDate: { type: String, require: true },
     budgetAllocated: { type: Number, require: false },
     state: { type: String, require: true },
-    description: { type: String, require: false }
+    description: { type: String, require: false },
+    resources:{type:mongoose.Schema.Types.ObjectId,ref:'Users'}
 })
 
 module.exports = mongoose.model('Project', projectSchema);

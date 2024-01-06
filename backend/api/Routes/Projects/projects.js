@@ -17,7 +17,6 @@ router.post('/addproject', async (req, res, next) => {
         })
 
     } catch (error) {
-        console.log(error);
         res.status(401).json({
             status: false,
             message: "Failed to create project"
@@ -25,4 +24,17 @@ router.post('/addproject', async (req, res, next) => {
     }
 });
 
-module.exports=router
+router.post('/getallprojects', async (req, res, next) => {
+    try {
+        const products = await productSchema.find()
+        if (products) return res.status(200).json(products);
+        else return res.status(400).json({ status: false, message: 'No Products Found' });
+    } catch (error) {
+        res.status(401).json({
+            status: false,
+            message: "Failed to create project"
+        });
+    }
+})
+
+module.exports = router
