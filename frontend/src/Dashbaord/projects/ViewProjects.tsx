@@ -11,6 +11,7 @@ export interface projectInterface {
         name: string;
         email: string;
         _id: string;
+        designation:String;
     }>;
     startDate: string;
     state: string;
