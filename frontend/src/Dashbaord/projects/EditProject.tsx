@@ -22,9 +22,6 @@ const EditProject = () => {
         __v: 0,
     });
 
-
-
-
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setProjectDetails((prevState: projectInterface) => ({
@@ -48,7 +45,6 @@ const EditProject = () => {
         <>
             <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md ">
                 <h2 className="text-lg font-semibold text-gray-700 capitalize ">Update Project</h2>
-
                 <form>
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div>
@@ -91,8 +87,6 @@ const EditProject = () => {
 
                 <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md ">
                     <h2 className="text-lg font-semibold text-gray-700 capitalize ">Resources</h2>
-
-
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
