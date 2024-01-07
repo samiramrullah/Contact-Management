@@ -5,6 +5,7 @@ import EditProfile from './Profile/EditProfile';
 import AddProject from './projects/AddProject';
 import DropDown from '../utils/Dropdown';
 import ViewProjects from './projects/ViewProjects';
+import EditProject from './projects/EditProject';
 
 const Layout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -123,6 +124,7 @@ const Layout = () => {
                         {/* Projects */}
                         <Route path='/addproject' element={<AddProject />} />
                         <Route path='/viewprojects' element={<ViewProjects />} />
+                        <Route path='/updateproject/:id' element={<EditProject />} />
                     </Routes>
                 </div>
             </div>

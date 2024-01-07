@@ -1,8 +1,6 @@
+import { Link } from 'react-router-dom'
 import { projectInterface } from '../../Dashbaord/projects/ViewProjects'
 const ProjectCard = (props: projectInterface) => {
-    console.log('====================================');
-    console.log(props);
-    console.log('====================================');
     return (
         <div className="w-full max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
             <img className="object-cover object-center w-full h-56" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="avatar" />
@@ -44,11 +42,13 @@ const ProjectCard = (props: projectInterface) => {
                 </div>
                 <div className='flex items-center justify-end'>
                     <div className="m-5">
-                        <button className="flex p-2.5 bg-slate-700 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                        </button>
+                        <Link to={`/dashbaord/updateproject/${props._id}`} >
+                            <button className="flex p-2.5 bg-slate-700 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

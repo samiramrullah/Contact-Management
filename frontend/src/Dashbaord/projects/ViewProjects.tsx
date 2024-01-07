@@ -13,7 +13,7 @@ import ProjectCard from '../../utils/cards/Projectcard'
     __v: Number;
 }
 const ViewProjects = () => {
-    const [allProjects, setAllProjects] = useState<Array<projectInterface>>([])
+    const [allProjects, setAllProjects] = useState<Array<projectInterface>>()
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_KEY}projects/getallprojects`, {
             headers: {

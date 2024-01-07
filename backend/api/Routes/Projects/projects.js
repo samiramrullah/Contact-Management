@@ -26,6 +26,27 @@ router.post('/addproject', async (req, res, next) => {
     }
 });
 
+router.get('/getprojectbyid/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const project = await productSchema.findById(id).populate({
+            path:'resources',
+            model:'Resources',
+            select: '_id name email phNumber designation'
+        });
+        return res.status(200).json({
+            status: true,
+            message: 'Project Successfully feteched',
+            project
+        })
+    } catch (error) {
+        res.status(401).json({
+            status: false,
+            message: "Failed to fetch product"
+        });
+    }
+})
+
 router.get('/getallprojects', async (req, res, next) => {
     try {
         const products = await productSchema.find()
