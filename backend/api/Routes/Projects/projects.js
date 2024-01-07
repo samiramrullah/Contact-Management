@@ -30,8 +30,8 @@ router.get('/getprojectbyid/:id', async (req, res, next) => {
     try {
         const id = req.params.id;
         const project = await productSchema.findById(id).populate({
-            path:'resources',
-            model:'Resources',
+            path: 'resources',
+            model: 'Resources',
             select: '_id name email phNumber designation'
         });
         return res.status(200).json({

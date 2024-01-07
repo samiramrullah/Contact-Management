@@ -8,12 +8,13 @@ const EditProject = () => {
     const [projectDetails, setProjectDetails] = useState<projectInterface>({
         _id: '',
         budgetAllocated: 0,
-        name: '',
-        resources: [],
+        name: '', // Replace ; with :
+        resources: [], // Initialize an empty array
         startDate: '',
         state: '',
         __v: 0,
     });
+    
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -26,9 +27,6 @@ const EditProject = () => {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_KEY}projects/getprojectbyid/${id}`)
             .then((res: any) => {
-                // toast.success(res?.data?.message, {
-                //     position: 'top-right'
-                // })
                 setProjectDetails(res.data.project)
             })
             .catch((err: any) => {
@@ -76,17 +74,27 @@ const EditProject = () => {
                                 value={projectDetails?.state ? projectDetails?.state.toString() : ''}
                             />
                         </div>
-                        <div>
-                            <label className="text-gray-700" >Username</label>
-                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md" />
-                        </div>
                     </div>
 
-                    <div className="flex justify-end mt-6">
+                    {/* <div className="flex justify-end mt-6">
                         <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
-                    </div>
+                    </div> */}
+                    <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md ">
+                        <h2 className="text-lg font-semibold text-gray-700 capitalize ">Resources</h2>
+                        <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                            <div>
+                                <label className="text-gray-700 " >Name</label>
+                                <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md"
+                                    name="state"
+                                    onChange={onChangeHandler}
+                                   
+                                />
+                            </div>
+                        </div>
+                    </section >
                 </form>
             </section>
+
             <ToastContainer />
         </>
     )

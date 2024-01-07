@@ -3,15 +3,20 @@ import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import ProjectCard from '../../utils/cards/Projectcard'
 
- export interface projectInterface {
-    _id: String;
-    budgetAllocated: Number;
-    name: String;
-    resources: String[];
-    startDate: String;
-    state: String;
-    __v: Number;
+export interface projectInterface {
+    _id: string;
+    budgetAllocated: number;
+    name: string;
+    resources: Array<{
+        name: string;
+        email: string;
+        _id: string;
+    }>;
+    startDate: string;
+    state: string;
+    __v: number;
 }
+
 const ViewProjects = () => {
     const [allProjects, setAllProjects] = useState<Array<projectInterface>>()
     useEffect(() => {
@@ -42,8 +47,8 @@ const ViewProjects = () => {
         <div className='grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3'>
             {allProjects?.map((project: projectInterface) => (
                 <ProjectCard _id={project._id} name={project.name}
-                startDate={project.startDate} state={project.state}
-                budgetAllocated={project.budgetAllocated} resources={[]} __v={project.__v}                />
+                    startDate={project.startDate} state={project.state}
+                    budgetAllocated={project.budgetAllocated} resources={[]} __v={project.__v} />
             ))}
             <ToastContainer />
         </div>
