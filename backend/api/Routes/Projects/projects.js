@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const productSchema = require('../../../models/project');
 const checkAuth = require('../../../middleware/check-auth');
-const userScheme = require('../../../models/user')
+const resourcesSchema = require('../../../models/user')
 
 router.post('/addproject', async (req, res, next) => {
     try {
@@ -46,12 +46,11 @@ router.post('/addresource', checkAuth, async (req, res, next) => {
         const { resourceId, projectId } = req.body;
 
         if (!resourceId || !projectId) return res.status(404).json({ status: false, message: 'Invalid Data' })
-        const existingUser = await userScheme.findById(resourceId);
+        const existingUser = await resourcesSchema.findById(resourceId);
         if (!existingUser) {
             return res.status(404).json({ status: false, message: 'User not found' });
         }
-        
-        const existingProject = await productSchema.findOne({  resources: resourceId });
+        const existingProject = await productSchema.findOne({ resources: resourceId });
         if (existingProject) {
             return res.status(400).json({ status: false, message: 'Resource already exists in the project' });
         }
@@ -60,8 +59,15 @@ router.post('/addresource', checkAuth, async (req, res, next) => {
             { $addToSet: { resources: resourceId } },
             { new: true }
         );
-        if (!updateFields) {
-            return res.status(404).json({ status: false, message: 'Project not found' });
+
+        const assignProject = await resourcesSchema.findOneAndUpdate(
+            { _id: resourceId },
+            { $addToSet: { projects: projectId } },
+            { new: true }
+        )
+
+        if (!updateFields || !assignProject) {
+            return res.status(404).json({ status: false, message: 'Error while adding resources' });
         }
         return res.status(200).json({
             status: true,
@@ -76,4 +82,22 @@ router.post('/addresource', checkAuth, async (req, res, next) => {
         });
     }
 })
+
+router.get('/projectdetails', checkAuth, async (req, res, next) => {
+    try {
+        const projectDetails = await productSchema.find({})
+            .populate({
+                path: 'resources',
+                model: 'Resources',
+                select: '_id name email phNumber designation'
+            });
+        res.status(200).json(projectDetails);
+    } catch (error) {
+        res.status(401).json({
+            status: false,
+            message: "Failed to Get Project Details",
+            error: error.message
+        });
+    }
+});
 module.exports = router
