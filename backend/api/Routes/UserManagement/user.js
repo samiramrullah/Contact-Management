@@ -6,7 +6,7 @@ const resourcesSchema = require('../../../models/user')
 router.get('/getuserdetails', checkAuth, async (req, res, next) => {
     try {
         const userId = req.userData.userId;
-        const user = await resourcesSchema.find({}).select('name email phNumber designation description managerComment')
+        const user = await resourcesSchema.findById(userId).select('name email phNumber projects designation description managerComment')
         .populate({
             path:'projects',
             model:'Project'

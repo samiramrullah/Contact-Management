@@ -29,6 +29,7 @@ const Profile = () => {
         toast.error(err?.response?.data.error.message)
       })
   }, [])
+
   return (
     <>
       <div className=''>
@@ -41,7 +42,7 @@ const Profile = () => {
                   <p className="text-gray-400">Working Time</p>
                 </div>
                 <div>
-                  <p className="font-bold text-gray-700 text-xl">{userData?.projectAllocated.length}</p>
+                  <p className="font-bold text-gray-700 text-xl">{userData?.projects?.length}</p>
                   <p className="text-gray-400">Projects</p>
                 </div>
                 <div>

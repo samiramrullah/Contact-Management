@@ -26,10 +26,14 @@ router.post('/addproject', async (req, res, next) => {
     }
 });
 
-router.post('/getallprojects', async (req, res, next) => {
+router.get('/getallprojects', async (req, res, next) => {
     try {
         const products = await productSchema.find()
-        if (products) return res.status(200).json(products);
+        if (products) return res.status(200).json({
+            status: true,
+            message: 'Projects Successfully Fetched',
+            products
+        });
         else return res.status(400).json({ status: false, message: 'No Products Found' });
     } catch (error) {
         res.status(401).json({
