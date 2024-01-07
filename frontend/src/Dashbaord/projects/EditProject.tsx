@@ -21,15 +21,6 @@ const EditProject = () => {
         state: '',
         __v: 0,
     });
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setProjectDetails((prevState: projectInterface) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_KEY}projects/getprojectbyid/${id}`)
             .then((res: any) => {
@@ -41,11 +32,25 @@ const EditProject = () => {
                 })
             })
     }, [id])
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setProjectDetails((prevState: projectInterface) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+    const onSubmitHandler = (e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log('====================================');
+        console.log(projectDetails);
+        console.log('====================================');
+    }
     return (
         <>
             <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md ">
                 <h2 className="text-lg font-semibold text-gray-700 capitalize ">Update Project</h2>
-                <form>
+                <form onSubmit={onSubmitHandler}>
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div>
                             <label className="text-gray-700" >Name</label>
@@ -79,9 +84,9 @@ const EditProject = () => {
                                 value={projectDetails?.state ? projectDetails?.state.toString() : ''}
                             />
                         </div>
-                        <div className="flex justify-end mt-6">
-                            <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
-                        </div>
+                    </div>
+                    <div className="flex justify-end mt-6">
+                        <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
                     </div>
                 </form>
 

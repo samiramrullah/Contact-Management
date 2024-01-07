@@ -48,7 +48,7 @@ const Layout = () => {
                 aria-label="Sidebar"
             >
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-                    <div className="flex items-center ps-2.5 mb-5">
+                    <div className="flex items-center ps-2.5 mb-5 cursor-pointer">
                         <img src="https://flowbite.com/docs/images/logo.svg" className="h-6 me-3 sm:h-7" alt="tech" />
                         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Soultion Nepal</span>
                         {isSidebarOpen && <svg onClick={() => setIsSidebarOpen(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
