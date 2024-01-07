@@ -16,7 +16,6 @@ router.get('/getuserdetails', checkAuth, async (req, res, next) => {
 
 router.put('/updateuserdetails', checkAuth, async (req, res, next) => {
     try {
-        console.log("here");
         const userId = req.userData.userId;
         const { projectAllocated, name, email, phNumber, degination, description } = req.body;
 
