@@ -63,7 +63,7 @@ exports.getallprojects = async (req, res, next) => {
     }
 }
 
-exports.addresource=async (req, res, next) => {
+exports.addresource = async (req, res, next) => {
     try {
         const userId = req.userData;
         if (!userId || userId.email != "samiramrullah@gmail.com") return res.status(401).json({ status: false, message: "Invalid Credentails" });
@@ -107,7 +107,7 @@ exports.addresource=async (req, res, next) => {
     }
 }
 
-exports.projectdetails=async (req, res, next) => {
+exports.projectdetails = async (req, res, next) => {
     try {
         const projectDetails = await productSchema.find({})
             .populate({
@@ -125,7 +125,31 @@ exports.projectdetails=async (req, res, next) => {
     }
 }
 
-exports.updateprojectByid=async (req, res, next) => {
-    const id = req.params;
-    return res.status(200).json(id)
+exports.updateprojectByid = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const { name, startDate, budgetAllocated, state, description } = req.body;
+        const updateFields = {};
+        if (name) updateFields.name = name;
+        if (startDate) updateFields.startDate = startDate;
+        if (budgetAllocated) updateFields.budgetAllocated = budgetAllocated;
+        if (state) updateFields.state = state;
+        if (description) updateFields.description = description;
+        const project = await productSchema.findByIdAndUpdate(
+            id,
+            updateFields,
+            { new: true }
+        )
+        if (!project) return res.status(404).json({ status: false, message: 'Project Not Found' });
+        return res.status(200).json({
+            status: true,
+            message: 'Project Updated Successfully'
+        })
+    } catch (error) {
+        res.status(401).json({
+            status: false,
+            message: "Failed to Update Project Details",
+            error: error.message
+        });
+    }
 }

@@ -18,6 +18,7 @@ const EditProject = () => {
             },
         ],
         startDate: '',
+        description: '',
         state: '',
         __v: 0,
     });
@@ -33,7 +34,7 @@ const EditProject = () => {
             })
     }, [id])
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setProjectDetails((prevState: projectInterface) => ({
             ...prevState,
@@ -42,9 +43,15 @@ const EditProject = () => {
     };
     const onSubmitHandler = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('====================================');
-        console.log(projectDetails);
-        console.log('====================================');
+        axios.put(`${process.env.REACT_APP_API_KEY}projects/updateprojectByid/${id}`, projectDetails)
+            .then((res) => {
+                toast.success(res?.data.message)
+            })
+            .catch((err: any) => {
+                toast.error(err?.response?.data.message, {
+                    position: 'top-right'
+                })
+            })
     }
     return (
         <>
@@ -69,7 +76,7 @@ const EditProject = () => {
                             />
                         </div>
                         <div>
-                            <label className="text-gray-700" >Username</label>
+                            <label className="text-gray-700" >Budget Allocated</label>
                             <input type="number" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md"
                                 name="budgetAllocated"
                                 onChange={onChangeHandler}
@@ -84,12 +91,19 @@ const EditProject = () => {
                                 value={projectDetails?.state ? projectDetails?.state.toString() : ''}
                             />
                         </div>
+                        <div>
+                            <label className="text-gray-700" >Description</label>
+                            <textarea  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md"
+                                name="description"
+                                onChange={onChangeHandler}
+                                value={projectDetails?.description ? projectDetails?.description.toString() : ''}
+                            />
+                        </div>
                     </div>
                     <div className="flex justify-end mt-6">
-                        <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Save</button>
+                        <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">Update</button>
                     </div>
                 </form>
-
                 <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md ">
                     <h2 className="text-lg font-semibold text-gray-700 capitalize ">Resources</h2>
                     <div className="relative overflow-x-auto">

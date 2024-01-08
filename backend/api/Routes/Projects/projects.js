@@ -15,7 +15,7 @@ router.post('/addresource', checkAuth,projectController.addresource )
 
 router.get('/projectdetails', checkAuth,projectController.projectdetails );
 
-router.put('/updateprojectByid/:id', checkAuth,projectController.updateprojectByid )
+router.put('/updateprojectByid/:id',projectController.updateprojectByid )
 
 
 module.exports = router

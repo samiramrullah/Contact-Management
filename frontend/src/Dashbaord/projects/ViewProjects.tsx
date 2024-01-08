@@ -14,6 +14,7 @@ export interface projectInterface {
         designation:String;
     }>;
     startDate: string;
+    description:string;
     state: string;
     __v: number;
 }
@@ -49,7 +50,7 @@ const ViewProjects = () => {
             {allProjects?.map((project: projectInterface) => (
                 <ProjectCard _id={project._id} name={project.name}
                     startDate={project.startDate} state={project.state}
-                    budgetAllocated={project.budgetAllocated} resources={[]} __v={project.__v} />
+                    budgetAllocated={project.budgetAllocated} resources={project.resources} __v={project.__v}  description={project.description}/>
             ))}
             <ToastContainer />
         </div>
