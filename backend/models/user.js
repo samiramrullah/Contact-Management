@@ -10,6 +10,7 @@ const resourcesSchema = mongoose.Schema({
     description: { type: String, require: false },
     projects: { type:mongoose.Schema.Types.ObjectId,ref:'Project' },
     managerComment: { type: Array, require: false },
+    activeToken:{type:String,require:false}
 })
 
 module.exports=mongoose.model('Resources',resourcesSchema);

@@ -30,8 +30,34 @@ exports.login = async (req, res, next) => {
             return res.status(401).json({ status: false, message: 'Invalid email or password.' });
         }
         const token = jwt.sign({ userId: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET_KEY);
+        user.activeToken = token;
+        await user.save();
         res.status(200).json({ status: true, message: 'Login successful.', token });
     } catch (error) {
         return res.status(401).json({ status: false, message: 'Failed to login' });
     }
 }
+
+
+exports.logout = async (req, res, next) => {
+    try {
+        const userId = req.userData; // Assuming userId is extracted from the token
+
+        if (!userId) {
+            return res.status(401).json({ status: false, message: 'User not logged in' });
+        }
+        const updatedUser = await resourcesSchema.findByIdAndUpdate(
+            userId,
+            { $unset: { activeToken: 1 } }, // Unset the activeToken field
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ status: false, message: 'User not found' });
+        }
+        res.status(200).json({ status: true, message: 'Logged out successfully' });
+    } catch (error) {
+        console.error('Error during logout:', error);
+        res.status(500).json({ status: false, message: 'Internal server error' });
+    }
+};
